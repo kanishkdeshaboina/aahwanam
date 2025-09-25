@@ -18,36 +18,36 @@ class MediaGallery extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-       child:Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /// ✅ Title
-            Text(
-              "Photos and Videos",
-              style: TextFontStyle.textFontStyle(
-                18,
-                Color(0xFF575959),
-                FontWeight.w500,
+      body: SingleChildScrollView(  // ✅ Add scrolling capability if needed
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,  // ✅ Take minimum space needed
+            children: [
+              /// ✅ Title
+              Text(
+                "Photos And Videos",
+                style: TextFontStyle.textFontStyle(
+                  15,
+                  const Color(0xFF575959),
+                  FontWeight.w500,
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-            /// ✅ Grid with fixed height (no vertical scrolling)
-            SizedBox(
-              height:390, // 👈 adjust height as needed
-              child: GridView.builder(
+              /// ✅ Grid without Flexible/Expanded - takes only needed space
+              GridView.builder(
                 padding: EdgeInsets.zero,
-                physics: const NeverScrollableScrollPhysics(), // ✅ no scrolling
+                shrinkWrap: true, // ✅ Only take space needed for content
+                physics: const NeverScrollableScrollPhysics(), // ✅ Disable internal scrolling
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
                   childAspectRatio: 1.0,
                 ),
-                itemCount: media.length > 9 ? 9 : media.length, // ✅ optional: limit items
+                itemCount: media.length > 9 ? 9 : media.length,
                 itemBuilder: (context, index) {
                   final item = media[index];
                   final String url = item['url'];
@@ -101,14 +101,11 @@ class MediaGallery extends StatelessWidget {
                   );
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-      ),
     );
-
-
   }
 }
 

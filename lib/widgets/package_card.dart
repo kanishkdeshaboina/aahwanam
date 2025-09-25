@@ -12,7 +12,7 @@ class CartImage extends StatelessWidget {
       borderRadius: BorderRadius.circular(6),
       child: Image.asset(
         imagePath,
-        height: 125,
+        height: 144,
         width: 80,
         fit: BoxFit.cover,
       ),
@@ -22,11 +22,13 @@ class CartImage extends StatelessWidget {
 
 /// 📅 Booking Image Widget
 class BookingImage extends StatelessWidget {
+
   final String imagePath;
   const BookingImage({Key? key, required this.imagePath}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: Image.asset(
@@ -141,6 +143,7 @@ class _PackageCardState extends State<PackageCard> {
 
   @override
   Widget build(BuildContext context) {
+    print('hii');
     return InkWell(
       onTap: widget.onTap,
       borderRadius: BorderRadius.circular(_getScaledValue(6)),

@@ -505,7 +505,7 @@ class _EventDateTimePickerState extends State<EventDateTimePicker> {
                       child: Text(
                         selectedTime != null
                             ? DateFormat('hh:mm a').format(selectedTime!)
-                            : "Select Time",
+                            : "Select time",
                         overflow: TextOverflow.ellipsis, // will truncate if long
                         style: TextFontStyle.textFontStyle(
                           12,

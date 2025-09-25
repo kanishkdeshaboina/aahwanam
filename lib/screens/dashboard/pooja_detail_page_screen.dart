@@ -6,6 +6,7 @@ import '../../widgets/custom_bottom_sheet.dart';
 import '../../widgets/custom_date_time_bottom_sheet.dart';
 
 import '../../widgets/custom_event_date_time_picker.dart';
+import '../../widgets/custom_inputfield.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/pandit_service_screen.dart';
 import 'media_gallery.dart';
@@ -277,11 +278,11 @@ class _PoojaDetailPageState extends State<PoojaDetailPage> {
     return Container(
       color: Colors.white,
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(19, 16, 16, 80),
+        padding: const EdgeInsets.fromLTRB(19, 16, 16, 5),
         children: [
           /// About Section
           Text(
-            "about",
+            "About",
             style: TextFontStyle.textFontStyle(
               17,
               const Color(0xFF575959),
@@ -373,7 +374,7 @@ class _PoojaDetailPageState extends State<PoojaDetailPage> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             ),
             child: Text(
-              "Find My Muhurat",
+              "Find my Muhurat",
               style: TextFontStyle.textFontStyle(
                 16,
                 const Color(0xFF184A45),
@@ -401,6 +402,7 @@ class MuhuratPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -419,6 +421,7 @@ class MuhuratPopup extends StatelessWidget {
             const SizedBox(height: 20), // ✅ Space after title
 
             /// ✅ Date & Time Picker
+
             EventDateTimePicker(label: label), // (Assuming your custom widget)
             const SizedBox(height: 20), // ✅ Space after date picker
 
@@ -426,12 +429,28 @@ class MuhuratPopup extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _buildInput("Birth Place *", "City"),
+                  child: CustomInputField(
+                    labelText: 'Birth Place*',
+
+                    controller: TextEditingController(),
+                    keyboardType: TextInputType.name,
+                  ),
                 ),
-                const SizedBox(width: 16), // ✅ More breathing space between inputs
+                // Expanded(
+                //   child: _buildInput("Birth Place *", "City"),
+                // ),
+                const SizedBox(width: 16),
                 Expanded(
-                  child: _buildInput("Nakshatra Name", "Xyz (Optional)"),
-                ),
+                  child: CustomInputField(
+                    labelText: 'Nakshatra Name*',
+
+                    controller: TextEditingController(),
+                    keyboardType: TextInputType.name,
+                  ),
+                ),// ✅ More breathing space between inputs
+                // Expanded(
+                //   child: _buildInput("Nakshatra Name", "Xyz (Optional)"),
+                // ),
               ],
             ),
             const SizedBox(height: 28), // ✅ Space before button
