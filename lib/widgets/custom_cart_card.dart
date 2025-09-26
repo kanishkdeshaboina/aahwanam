@@ -58,8 +58,8 @@ class _CustomCartCardState extends State<CustomCartCard> {
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
                   widget.imageUrl,
-                  height: 80,
-                  width: 73,
+                  height: 93,
+                  width: 75,
                   fit: BoxFit.cover,
                 ),
               ),

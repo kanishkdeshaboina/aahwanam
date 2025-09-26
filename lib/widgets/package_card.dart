@@ -204,7 +204,7 @@ class _PackageCardState extends State<PackageCard> {
                           child: Text(
                             widget.title,
                             style: TextFontStyle.textFontStyle(
-                                _getScaledValue(14),
+                                _getScaledValue(13),
                                 const Color(0xFF575959),
                                 FontWeight.w500
                             ),

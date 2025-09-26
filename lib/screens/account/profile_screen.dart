@@ -66,18 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: const Color(0xFF333333),
                   ),
                 ),
-                SizedBox(height: size.height * 0.015),
-                // Subtitle
-                Text(
-                  "Lorem ipsum dolor sit amet, consectetur\nipiscing elit, sed do eiusmod tempor cididunt.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14 * textScale,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xFF6B6B6B),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.03),
+                SizedBox(height: size.height * 0.01),
                 // Buttons
                 Row(
                   children: [
@@ -164,16 +153,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     fontSize: 16 * textScale,
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFF333333),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.015),
-                Text(
-                  "Lorem ipsum dolor sit amet, consectetur\nipiscing elit, sed do eiusmod tempor cididunt.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14 * textScale,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xFF6B6B6B),
                   ),
                 ),
               ],
