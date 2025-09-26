@@ -64,7 +64,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
               leading: IconButton(
                 padding: EdgeInsets.only(
                   top: getResponsivePadding(2),
-                  left: getResponsivePadding(10),
+                  left: getResponsivePadding(15),
                 ),
                 icon: const Icon(
                   Icons.arrow_back_ios,
@@ -78,7 +78,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
               actions: [
                 Padding(
                   padding: EdgeInsets.only(
-                    right: screenWidth * 0.01, // Adjust right spacing
+                    right: screenWidth * 0.04, // Adjust right spacing
                     left: screenWidth * 0.02, // Adjust left spacing
                   ),
                   child: IconButton(
@@ -133,7 +133,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                           ),
                           child: Text(
                             "Booked Packages",
-                            style: TextStyle(fontSize: getResponsiveFont(14)),
+                            style: TextStyle(fontSize: getResponsiveFont(12)),
                           ),
                         ),
                       ),
@@ -165,7 +165,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                           ),
                           child: Text(
                             "Cart",
-                            style: TextStyle(fontSize: getResponsiveFont(14)),
+                            style: TextStyle(fontSize: getResponsiveFont(12)),
                           ),
                         ),
                       ),
@@ -177,7 +177,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: getResponsivePadding(14),
+                      horizontal: getResponsivePadding(12),
                     ),
                     child: isAllSelected
                         ? (packageItems.isEmpty

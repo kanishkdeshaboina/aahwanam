@@ -57,7 +57,7 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
+        padding: const EdgeInsets.fromLTRB(18, 0, 16, 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -80,13 +80,13 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
                             package['imagePath'],
                             fit: BoxFit.cover,
                             width: 80,
-                            height: 100,
+                            height: 90,
                           ),
                         ),
                       ],
                     ),
 
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 10),
                     // RIGHT SIDE: Content
                     Expanded(
                       child: Padding(
@@ -96,7 +96,7 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
                           children: [
                             Text(
                               package['title'],
-                              style:TextFontStyle.textFontStyle(15,Color(0xFF575959), FontWeight.w600),
+                              style:TextFontStyle.textFontStyle(12,Color(0xFF575959), FontWeight.w600),
                             ),
                             const SizedBox(height: 6),
                             Text(
