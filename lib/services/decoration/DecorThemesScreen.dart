@@ -24,8 +24,8 @@ class ThemesScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // First Title
-           Padding(
-            padding: EdgeInsets.only(left: 25, top: 0, bottom: 10),
+          Padding(
+            padding: EdgeInsets.only(left: 29, top: 0, bottom: 10),
             child: Text(
               "Birthday Decoration",
               style: TextFontStyle.textFontStyle(
@@ -48,8 +48,8 @@ class ThemesScreen extends StatelessWidget {
               .toList(),
 
           // Second Title
-           Padding(
-            padding: EdgeInsets.only(left: 25, top: 5, bottom: 10), // Reduced gap
+          Padding(
+            padding: EdgeInsets.only(left: 29, top: 5, bottom: 10), // Reduced gap
             child: Text(
               "Birthday Decoration for Kids",
               style: TextFontStyle.textFontStyle(

@@ -110,23 +110,14 @@ class MakeupScreen extends StatelessWidget {
                         heading: "Makeup Look",
                         categories: state.makeUpLook,
                         showViewAll: true,
-                        onCategoryTap: (String categoryName) {
-                          // Map category names to route names
-                          final Map<String, String> categoryRoutes = {
-                            // Add more categories and routes here
-                          };
 
-                          final routeName = categoryRoutes[categoryName];
-                          if (routeName != null) {
-                            Navigator.pushNamed(context, routeName);
-                          } else {
-                            // Handle cases where a route is not mapped
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('No route available for $categoryName')),
-                            );
-                          }
+                        onCategoryTap: (String categoryName) {
+                          // Directly navigate to DecorationThemeScreen for all categories
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MakeupHairService(makeupAndHairArtist: {},)),
+                          );
                         },
-                        onViewAll: () {},
 
                       ),
 
@@ -158,11 +149,11 @@ class MakeupScreen extends StatelessWidget {
                       ),
 
 
-                         const SizedBox(height: 2),
+                      const SizedBox(height: 2),
                       // Decorators Section
-                        CustomCardMakeUpWidgets.buildSection(
+                      CustomCardMakeUpWidgets.buildSection(
                         context,
-                          title: "Makeup & Hair Artists",
+                        title: "Makeup & Hair Artists",
                         data: state.makeupAndHairArtists,
                         showViewAll: true,
 
@@ -187,7 +178,7 @@ class MakeupScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                             Text(
+                            Text(
                               "Trending Looks",
                               style: TextFontStyle.textFontStyle(16, const Color(0xFF575959), FontWeight.w600),
 

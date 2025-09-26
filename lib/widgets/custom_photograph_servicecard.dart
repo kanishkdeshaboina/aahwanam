@@ -91,7 +91,7 @@ class CustomServiceCard extends StatelessWidget {
                         child: Image.asset(
                           imagePath,
                           width: double.infinity,
-                          height: 150,
+                          height: 90,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -103,7 +103,7 @@ class CustomServiceCard extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(name, style: TextFontStyle.textFontStyle(16, const Color(0xFF575959), FontWeight.w500)),
+                              Text(name, style: TextFontStyle.textFontStyle(14, const Color(0xFF575959), FontWeight.w500)),
                               SizedBox(height: 4),
                               Text( "${price}" ,
                                   style: TextFontStyle.textFontStyle(14, const Color(0xFF575959), FontWeight.w600)

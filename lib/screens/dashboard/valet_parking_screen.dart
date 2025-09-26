@@ -98,7 +98,7 @@ class ValetParkingScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                           Text(
+                          Text(
                             "Packages",
                             style: TextFontStyle.textFontStyle(16, const Color(0xFF575959), FontWeight.w600), // smaller text
 
@@ -131,18 +131,31 @@ class ValetParkingScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final package = state.Packages[index];
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0), // Adjust spacing between cards
-                            child: PackageCard(
-                              title: package['title'],
-                              description: package['description'],
-                              price: package['price'],
-                              details: package['details'],
-                              imagePath: package['imagePath'],
-                              rating: package['rating'],
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ValetParkingServiceScreen(
+
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: PackageCard(
+                                title: package['title'],
+                                description: package['description'],
+                                price: package['price'],
+                                details: package['details'],
+                                imagePath: package['imagePath'],
+                                rating: package['rating'],
+                              ),
                             ),
                           );
                         },
                       ),
+
                     ],
                   ),
                 ),

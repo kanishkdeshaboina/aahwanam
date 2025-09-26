@@ -5,6 +5,7 @@ import '../../blocs/decor/decor_bloc.dart';
 import '../../blocs/decor/decor_event.dart';
 import '../../blocs/decor/decor_state.dart';
 import '../../services/decoration/birthday_decoration.dart';
+import '../../services/decoration/decoration_theme.dart';
 import '../../services/services_screen.dart';
 import '../../widgets/custom_card_birthday.dart';
 import '../../widgets/custom_circle_widget.dart';
@@ -117,23 +118,21 @@ class DecorScreen extends StatelessWidget {
                         categories: state.eventsAndThemes,
                         showViewAll: false,
                         onCategoryTap: (String categoryName) {
-                          // Map category names to route names
-                          final Map<String, String> categoryRoutes = {
-                            // Add more categories and routes here
-                          };
-
-                          final routeName = categoryRoutes[categoryName];
-                          if (routeName != null) {
-                            Navigator.pushNamed(context, routeName);
-                          } else {
-                            // Handle cases where a route is not mapped
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('No route available for $categoryName')),
-                            );
-                          }
+                          // Directly navigate to DecorationThemeScreen for all categories
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => BirthdayDecoration(decorator: {},)),
+                          );
                         },
-                        onViewAll: () {},
+                        onViewAll: () {
+                          // Optional: handle view all action
+                          print("View all tapped");
+                        },
                       ),
+
+
+
+
 
                       const SizedBox(height: 2),
                       // Decorators Section

@@ -56,12 +56,15 @@ class ServiceOverviewTab extends StatelessWidget {
                   FontWeight.w600,
                 ),
               ),
-              Text(
-                packagePrice,
-                style: TextFontStyle.textFontStyle(
-                  14,
-                  const Color(0xFF1E535B),
-                  FontWeight.w600,
+              Padding(
+                padding: const EdgeInsets.only(right: 12.0),
+                child: Text(
+                  packagePrice,
+                  style: TextFontStyle.textFontStyle(
+                    14,
+                    const Color(0xFF1E535B),
+                    FontWeight.w600,
+                  ),
                 ),
               ),
             ],
@@ -133,7 +136,7 @@ class ServiceOverviewTab extends StatelessWidget {
                     children: [
                       Text(
                         label1!,
-                      style:   TextFontStyle.textFontStyle(
+                        style:   TextFontStyle.textFontStyle(
                           12,
                           const Color(0xFF575959),
                           FontWeight.w500,
@@ -144,7 +147,7 @@ class ServiceOverviewTab extends StatelessWidget {
                       TextFormField(
                         initialValue: initialValue1 ?? '',
                         cursorColor:
-                            Color(0xFF1E535B), // Set your desired cursor color
+                        Color(0xFF1E535B), // Set your desired cursor color
                         decoration: InputDecoration(
                           hintText: 'Enter $label1',
                           hintStyle: TextFontStyle.textFontStyle(
@@ -189,7 +192,7 @@ class ServiceOverviewTab extends StatelessWidget {
                       TextFormField(
                         initialValue: initialValue2 ?? '',
                         cursorColor:
-                            Color(0xFF1E535B), // Set your desired cursor color
+                        Color(0xFF1E535B), // Set your desired cursor color
                         decoration: InputDecoration(
                           hintText: 'Enter $label2',
                           hintStyle: TextFontStyle.textFontStyle(
@@ -241,7 +244,7 @@ class ServiceOverviewTab extends StatelessWidget {
                       TextFormField(
                         initialValue: initialValue1 ?? '',
                         cursorColor:
-                            Color(0xFF1E535B), // Set your desired cursor color
+                        Color(0xFF1E535B), // Set your desired cursor color
                         decoration: InputDecoration(
                           hintText: 'Enter $label1',
                           hintStyle: TextStyle(
@@ -286,7 +289,7 @@ class ServiceOverviewTab extends StatelessWidget {
                       TextFormField(
                         initialValue: initialValue2 ?? '',
                         cursorColor:
-                            Color(0xFF1E535B), // Set your desired cursor color
+                        Color(0xFF1E535B), // Set your desired cursor color
                         decoration: InputDecoration(
                           hintText: 'Enter $label2',
                           hintStyle: TextFontStyle.textFontStyle(
@@ -324,9 +327,9 @@ class ServiceOverviewTab extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     Text(
+                    Text(
                       "No. Of Vehicles *",
-                style: TextFontStyle.textFontStyle(
+                      style: TextFontStyle.textFontStyle(
                         12,
                         const Color(0xFF575959),
                         FontWeight.w500,
@@ -346,7 +349,7 @@ class ServiceOverviewTab extends StatelessWidget {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide:
-                              const BorderSide(color: Color(0xFFE4E4E4)),
+                          const BorderSide(color: Color(0xFFE4E4E4)),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
@@ -366,7 +369,7 @@ class ServiceOverviewTab extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     Text(
+                    Text(
                       "No. Of Associates",
                       style: TextFontStyle.textFontStyle(
                         12,
@@ -389,7 +392,7 @@ class ServiceOverviewTab extends StatelessWidget {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide:
-                              const BorderSide(color: Color(0xFFE4E4E4)),
+                          const BorderSide(color: Color(0xFFE4E4E4)),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
@@ -428,45 +431,45 @@ class ServiceOverviewTab extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(address,
-                          style: TextFontStyle.textFontStyle(
-                            14,
-                            const Color(0xFF575959),
-                            FontWeight.w500,
-                          ),
-                         ),
+                        style: TextFontStyle.textFontStyle(
+                          14,
+                          const Color(0xFF575959),
+                          FontWeight.w500,
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 10),
                     ElevatedButton(
-                      onPressed: onChangeAddress,
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: const Color(0xFF1E535B),
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          side: const BorderSide(
-                              color: Color(0xFF1E535B), width: 1),
+                        onPressed: onChangeAddress,
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: const Color(0xFF1E535B),
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            side: const BorderSide(
+                                color: Color(0xFF1E535B), width: 1),
+                          ),
+                          padding: const EdgeInsets.all(6),
+                          minimumSize: const Size(0, 0),
                         ),
-                        padding: const EdgeInsets.all(6),
-                        minimumSize: const Size(0, 0),
-                      ),
-                      child:  Text("Change",
+                        child:  Text("Change",
                           style: TextFontStyle.textFontStyle(
                             10,
                             const Color(0xFF575959),
                             FontWeight.w500,
                           ),
-                      )
+                        )
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
                 Text(addressDescription,
-                    style: TextFontStyle.textFontStyle(
-                      12,
-                      const Color(0xFF757575),
-                      FontWeight.w400,
-                    ),
-                   ),
+                  style: TextFontStyle.textFontStyle(
+                    12,
+                    const Color(0xFF757575),
+                    FontWeight.w400,
+                  ),
+                ),
               ],
             ),
           )

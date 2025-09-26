@@ -81,17 +81,19 @@ class ChefBloc extends Bloc<ChefEvent, ChefState> {
           break;
         case 2:
           final galleryImages = [
-            'assets/images/Cuisines.png',
-            'assets/images/Tiffins.png',
-            'assets/images/Snacks.png',
-            'assets/images/Desserts.png',
-            'assets/images/Pizza.png',
-            'assets/images/Beverages.png',
-            'assets/images/Appetizers.png',
-            'assets/images/Platters.png',
-            'assets/images/Pizza.png',
-            'assets/images/Beverages.png',
-            'assets/images/Appetizers.png'
+            'assets/images/Kitty-party3.png',
+            'assets/images/Kitty party EE.png',
+            'assets/images/Kitty-party2.png',
+            'assets/images/Kitty-party3.png',
+            'assets/images/Get-Together1.png',
+            'assets/images/Get-Together2.png',
+            'assets/images/Get-Together3.png',
+            'assets/images/Get-Together1.png',
+            'assets/images/birthday_decor.png',
+            'assets/images/Birthday event.png',
+            'assets/images/birthdayGallery1.png',
+            'assets/images/birthdayGallery2.png',
+
           ];
 
           emit(ChefGalleryLoaded(galleryImages: galleryImages));

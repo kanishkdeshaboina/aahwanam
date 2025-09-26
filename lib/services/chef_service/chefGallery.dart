@@ -67,7 +67,7 @@ class ChefGalleryImageList extends StatelessWidget {
         // Split images into 3 groups
         final chefs = galleryImages.take(4).toList();       // 0-3
         final anniversaryImages = galleryImages.skip(4).take(4).toList(); // 4-6
-        final poojaImages = galleryImages.skip(7).take(4).toList();       // 7-10
+        final poojaImages = galleryImages.skip(8).take(4).toList();       // 7-10
 
         return SingleChildScrollView(
           child: Column(

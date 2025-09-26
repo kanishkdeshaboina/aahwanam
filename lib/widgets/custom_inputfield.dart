@@ -14,7 +14,9 @@ class CustomInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('hii');
     return Padding(
+
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +24,7 @@ class CustomInputField extends StatelessWidget {
           Text(
             labelText,
             style: TextFontStyle.textFontStyle(
-              16,                      // font size
+              labelText == 'Nakshatra Name*' || labelText == 'Birth Place*'  ? 11 :12,                      // font size
               Color(0xFF575959),       // color
               FontWeight.w500,         // weigh// optional if you're not using GoogleFonts
             ),

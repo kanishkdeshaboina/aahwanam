@@ -93,7 +93,7 @@ class CustomValetServiceCard extends StatelessWidget {
                       isScrollControlled: true,
                       shape: const RoundedRectangleBorder(
                         borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(24)),
+                        BorderRadius.vertical(top: Radius.circular(24)),
                       ),
                       builder: (context) => CustomDateTimeBottomSheet(
                         onConfirm: (DateTime fullDateTime) {
@@ -140,7 +140,7 @@ class CustomValetServiceCard extends StatelessWidget {
             child: DefaultTabController(
               length: 3,
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.only(left:2),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -151,56 +151,70 @@ class CustomValetServiceCard extends StatelessWidget {
                       indicatorColor: const Color(0xFF575959),
                       tabs: [
                         Tab(
-                            child: Align(
-                                child: Text(
-                          "All Details",
-                          style: TextFontStyle.textFontStyle(
-                            14,
-                            const Color(0xFF1E535B),
-                            FontWeight.w400,
+                          child: Align(
+                            alignment: Alignment.centerLeft, // optional, aligns text to left
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5), // ✅ only this tab text
+                              child: Text(
+                                "All Details",
+                                style: TextFontStyle.textFontStyle(
+                                  16,
+                                  const Color(0xFF1E535B),
+                                  FontWeight.w500,
+                                ),
+                              ),
+                            ),
                           ),
-                        ))),
+                        ),
                         Tab(
-                            child: Align(
-                                child: Text(
-                          "Gallery",
-                          style: TextFontStyle.textFontStyle(
-                            14,
-                            const Color(0xFF1E535B),
-                            FontWeight.w400,
+                          child: Align(
+                            child: Text(
+                              "Gallery",
+                              style: TextFontStyle.textFontStyle(
+                                16,
+                                const Color(0xFF1E535B),
+                                FontWeight.w500,
+                              ),
+                            ),
                           ),
-                        ))),
+                        ),
                         Tab(
-                            child: Align(
-                                child: Text(
-                          "Reviews",
-                          style: TextFontStyle.textFontStyle(
-                            14,
-                            const Color(0xFF1E535B),
-                            FontWeight.w400,
+                          child: Align(
+                            child: Text(
+                              "Reviews",
+                              style: TextFontStyle.textFontStyle(
+                                16,
+                                const Color(0xFF1E535B),
+                                FontWeight.w500,
+                              ),
+                            ),
                           ),
-                        ))),
+                        ),
                       ],
                     ),
+
                     Expanded(
                       child: TabBarView(
                         children: [
                           SingleChildScrollView(
-                            child: ServiceOverviewTab(
-                              heading: heading,
-                              packagePrice: packagePrice,
-                              description: description,
-                              subHeading: subHeading,
-                              subHeadingDetails: subHeadingDetails,
-                              eventTitle: eventTitle,
-                              address: address,
-                              addressDescription: addressDescription,
-                              onChangeAddress: () =>
-                                  _showChangeAddress(context),
-                              label1: label1,
-                              label2: label2,
-                              initialValue1: initialValue1,
-                              initialValue2: initialValue2,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left:8.0),
+                              child: ServiceOverviewTab(
+                                heading: heading,
+                                packagePrice: packagePrice,
+                                description: description,
+                                subHeading: subHeading,
+                                subHeadingDetails: subHeadingDetails,
+                                eventTitle: eventTitle,
+                                address: address,
+                                addressDescription: addressDescription,
+                                onChangeAddress: () =>
+                                    _showChangeAddress(context),
+                                label1: label1,
+                                label2: label2,
+                                initialValue1: initialValue1,
+                                initialValue2: initialValue2,
+                              ),
                             ),
                           ),
                           SingleChildScrollView(
@@ -369,19 +383,19 @@ void _showChangeAddress(BuildContext context) {
               _addressTile(
                 title: 'Financial District',
                 subtitle:
-                    'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit,',
+                'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit,',
               ),
               SizedBox(height: 12),
               _addressTile(
                 title: 'Madhapur',
                 subtitle:
-                    'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit,',
+                'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit,',
               ),
               SizedBox(height: 12),
               _addressTile(
                 title: 'Hitech City',
                 subtitle:
-                    'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit,',
+                'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit,',
               ),
               // SizedBox(height: 12),
               // _addressTile(

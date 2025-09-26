@@ -106,13 +106,13 @@ class ChefScreen extends StatelessWidget {
                         heading: "Categories",
                         categories: state.categories,
                         showViewAll: false,
+
                         onCategoryTap: (String categoryName) {
-                          // Navigation logic or category-specific actions
-                        },
-                        onViewAll: () {
-                          Navigator.of(context).maybePop(); // Navigate back to the parent if needed
-                          // final dashboardScreenState = context.findAncestorStateOfType<_DashboardScreenState>();
-                          // dashboardScreenState?._onItemTapped(1); // Navigate to the Services tab (index 1)
+                          // Directly navigate to DecorationThemeScreen for all categories
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ChefService(chefs: {},)),
+                          );
                         },
                       ),
                       const SizedBox(height: 2),
@@ -123,6 +123,7 @@ class ChefScreen extends StatelessWidget {
                         title: "Chefs for you",
                         data: state.chefs,
                         showViewAll: true,
+
                         onViewAll: () {
                           // Show first item or navigate to a full list page
                           if (state.chefs.isNotEmpty) {

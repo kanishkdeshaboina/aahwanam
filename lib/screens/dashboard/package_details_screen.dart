@@ -138,7 +138,7 @@ class PackageDetailScreen extends StatelessWidget {
       color: Colors.white,
     child: SingleChildScrollView(
 
-      padding: const EdgeInsets.fromLTRB(19, 16, 16, 80),
+      padding: const EdgeInsets.fromLTRB(19, 16, 26, 5),
 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,7 +228,7 @@ class PackageDetailScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomInputField(
-                  labelText: 'No. Of Guests*',
+                  labelText: 'No. of Guests*',
                   controller: TextEditingController(),
                   keyboardType: TextInputType.number,
                 ),
@@ -236,7 +236,7 @@ class PackageDetailScreen extends StatelessWidget {
               const SizedBox(width: 16),
               Expanded(
                 child: CustomInputField(
-                  labelText: 'No. Of Bartenders*',
+                  labelText: 'No. of Bartenders*',
 
                   controller: TextEditingController(),
                   keyboardType: TextInputType.number,

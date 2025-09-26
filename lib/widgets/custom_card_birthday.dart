@@ -33,14 +33,14 @@ class CustomCardBirthdayWidgets {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 0),
+            padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   title,
                   style: TextFontStyle.textFontStyle(
-                    16,
+                    18,
                     const Color(0xFF575959),
                     FontWeight.w600,
                   ),

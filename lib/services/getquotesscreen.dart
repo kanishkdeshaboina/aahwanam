@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
 import '../blocs/decor/decor_bloc.dart';
 import '../blocs/decor/decor_event.dart';
 import '../blocs/decor/decor_state.dart';
@@ -21,6 +20,7 @@ class Getquotescreen extends StatefulWidget {
 
 class _GetquotescreenState extends State<Getquotescreen> {
   final List<File> _selectedImages = [];
+  double currentValue = 20000;
   RangeValues currentRange = const RangeValues(3000, 25000);
 
   Future<void> _pickImageFromGallery() async {
@@ -55,7 +55,7 @@ class _GetquotescreenState extends State<Getquotescreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 20, top: 10),
                     child: Text(
                       "Add Your Decoration Inspirations",
@@ -64,15 +64,13 @@ class _GetquotescreenState extends State<Getquotescreen> {
                         const Color(0xFF575959),
                         FontWeight.w600,
                       ),
-
-
                     ),
                   ),
                   SizedBox(
                     height: 6,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10.0,left: 5.0),
+                    padding: const EdgeInsets.only(top: 10.0, left: 5.0),
                     child: SizedBox(
                       height: 60,
                       child: ListView.builder(
@@ -119,7 +117,7 @@ class _GetquotescreenState extends State<Getquotescreen> {
                       ),
                     ),
                   ),
-                   Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 20, top: 15),
                     child: Text(
                       "Add your thoughts",
@@ -128,11 +126,10 @@ class _GetquotescreenState extends State<Getquotescreen> {
                         const Color(0xFF575959),
                         FontWeight.w600,
                       ),
-
                     ),
                   ),
-                   Padding(
-                    padding: EdgeInsets.only(left: 20, top: 15),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, top: 15,),
                     child: SizedBox(
                       width: 350,
                       height: 52,
@@ -150,54 +147,97 @@ class _GetquotescreenState extends State<Getquotescreen> {
                               const Color(0xFF575959),
                               FontWeight.w500,
                             ),
-
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                   Padding(
-                    padding: EdgeInsets.only(left: 20, top: 15),
-                    child: Text(
-                      "Choose budget range",
-                      style: TextFontStyle.textFontStyle(
-                        14,
-                        const Color(0xFF575959),
-                        FontWeight.w600,
-                      ),
-
                     ),
                   ),
                   StatefulBuilder(
                     builder: (context, setState) {
-                      return SliderTheme(
-                        data: SliderTheme.of(context).copyWith(
-                          trackHeight: 1.5,
-                          activeTrackColor: const Color(0xFF1E535B),
-                          inactiveTrackColor: Colors.grey.shade300,
-                          thumbColor: const Color(0xFF1E535B),
-                          overlayColor: Colors.transparent,
-                          valueIndicatorColor: const Color(0xFF1E535B),
-                          valueIndicatorTextStyle: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // 👆 Header + Selected Value
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, top: 15, right: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Choose budget range",
+                                  style: TextFontStyle.textFontStyle(
+                                    14,
+                                    const Color(0xFF575959),
+                                    FontWeight.w600,
+                                  ),
+                                ),
+                                Text(
+                                  '₹${currentValue.toInt()}',
+                                  style: TextFontStyle.textFontStyle(
+                                    14,
+                                    const Color(0xFF1E535B),
+                                    FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          showValueIndicator: ShowValueIndicator.always,
-                        ),
-                        child: RangeSlider(
-                          values: currentRange,
-                          min: 1000,
-                          max: 50000,
-                          // Remove divisions to remove dots
-                          labels: RangeLabels(
-                            '₹${currentRange.start.toInt()}',
-                            '₹${currentRange.end.toInt()}',
+
+                          // 👇 Slider
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SliderTheme(
+                                  data: SliderTheme.of(context).copyWith(
+                                    trackHeight: 1,
+                                    activeTrackColor: const Color(0xFF1E535B),
+                                    inactiveTrackColor: Colors.grey.shade300,
+                                    thumbColor: const Color(0xFF1E535B),
+                                    overlayColor: Colors.transparent,
+                                    thumbShape:
+                                    const RoundSliderThumbShape(enabledThumbRadius: 5),
+                                  ),
+                                  child: Slider(
+                                    value: currentValue < 3000 ? 3000 : currentValue,
+                                    min: 3000,
+                                    max: 50000,
+                                    onChanged: (value) {
+                                      setState(() => currentValue = value);
+                                    },
+                                  ),
+                                ),
+
+                                // 👇 Min & Max labels
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 25.0, right: 5.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '₹3000',
+                                        style: TextFontStyle.textFontStyle(
+                                          14,
+                                          const Color(0xFF575959),
+                                          FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        '₹50000',
+                                        style: TextFontStyle.textFontStyle(
+                                          14,
+                                          const Color(0xFF575959),
+                                          FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          onChanged: (values) {
-                            setState(() => currentRange = values);
-                          },
-                        ),
+                        ],
                       );
                     },
                   ),
@@ -207,21 +247,9 @@ class _GetquotescreenState extends State<Getquotescreen> {
 
 
 
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('₹3000',
-                            style: TextStyle(
-                                fontSize: 12, color: Color(0xFF575959))),
-                        Text('₹50000',
-                            style: TextStyle(
-                                fontSize: 12, color: Color(0xFF575959))),
-                      ],
-                    ),
-                  ),
-                   Padding(
+
+
+                  Padding(
                     padding: EdgeInsets.only(left: 20, top: 15),
                     child: Text(
                       "Connect with us",
@@ -230,7 +258,6 @@ class _GetquotescreenState extends State<Getquotescreen> {
                         const Color(0xFF575959),
                         FontWeight.w600,
                       ),
-
                     ),
                   ),
                   Container(
@@ -245,12 +272,12 @@ class _GetquotescreenState extends State<Getquotescreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Row(
+                        Row(
                           children: [
                             CircleAvatar(
                               radius: 16,
                               backgroundImage:
-                                  AssetImage('assets/images/profile.png'),
+                              AssetImage('assets/images/profile.png'),
                             ),
                             SizedBox(width: 8),
                             Text(
@@ -260,7 +287,6 @@ class _GetquotescreenState extends State<Getquotescreen> {
                                 const Color(0xFF1E535B),
                                 FontWeight.w500,
                               ),
-
                             ),
                           ],
                         ),
@@ -271,7 +297,7 @@ class _GetquotescreenState extends State<Getquotescreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) =>
-                                          const ConnectingScreen())),
+                                      const ConnectingScreen())),
                               child: const CircleAvatar(
                                 radius: 14,
                                 backgroundColor: Color(0xFF1E535B),
@@ -314,18 +340,19 @@ class _GetquotescreenState extends State<Getquotescreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          child:  Text('Hire Decorator',
-                              style: TextFontStyle.textFontStyle(
-                            14,
-                             Colors.white,
-                            FontWeight.w500,
+                          child: Text(
+                            'Hire Decorator',
+                            style: TextFontStyle.textFontStyle(
+                              14,
+                              Colors.white,
+                              FontWeight.w500,
+                            ),
                           ),
-
                         ),
                       ),
                     ),
-                  ),
-                  )],
+                  )
+                ],
               ),
             ),
           );

@@ -13,6 +13,7 @@ import '../../blocs/Photographer/photographer_bloc.dart';
 import '../../blocs/Photographer/photographer_event.dart';
 import '../../blocs/Photographer/photographer_state.dart';
 import '../../services/proceedpay.dart';
+import '../../services/services_screen.dart';
 import '../../widgets/custom_date_time_bottom_sheet.dart';
 
 import 'package:share_plus/share_plus.dart';
@@ -22,107 +23,125 @@ class PhotographBookServiceScreen extends StatelessWidget {
   final String? price;
   final int? count;
 
-  const PhotographBookServiceScreen({
+  PhotographBookServiceScreen({
     super.key,
     this.imagePath,
     this.price,
     this.count,
   });
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PhotographerBloc()..add(FetchPhotographers()),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          automaticallyImplyLeading: false,
-          titleSpacing: 0,
-          leadingWidth: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new,
-                size: 24, color: Color(0xFF1E535B)),
-            onPressed: () => Navigator.pop(context),
-            padding: const EdgeInsets.only(left: 4),
-            splashRadius: 20,
-            constraints: const BoxConstraints(),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) =>
+            PhotographerBloc()..add(FetchPhotographers()),
           ),
-          title: Text(
-            "Book Service",
-            style: TextFontStyle.textFontStyle(
-              16,
-              const Color(0xFF575959),
-              FontWeight.w600,
-            ),
+          BlocProvider(
+            create: (context) => ServiceCubit(), // 👈 make sure you add this
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.share,
-                color: Color.fromRGBO(30, 83, 91, 1),
+        ],
+        child: BlocListener<ServiceCubit, String?>(
+          listener: (context, route) {
+            if (route == 'back') {
+              Navigator.pop(context); // 👈 go back
+            } else if (route != null) {
+              Navigator.pushNamed(context, route); // 👈 navigate to route
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              automaticallyImplyLeading: false,
+              leadingWidth: 40,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new,
+                    size: 24, color: Color(0xFF1E535B)),
+                onPressed: () => Navigator.of(context).pop(),
+                splashRadius: 24,
               ),
-              onPressed: ()  {
+              titleSpacing: 0,
+              title: Padding(
+                padding: const EdgeInsets.only(left:20.0),
+                child: Text(
+                  "Book Service",
+                  style: TextFontStyle.textFontStyle(
+                    16,
+                    const Color(0xFF575959),
+                    FontWeight.w600,
+                  ),
+                ),
+              ),
+              actions: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.share,
+                    color: Color.fromRGBO(30, 83, 91, 1),
+                  ),
+                  onPressed: ()  {
 
 
 
 
-              },),
-            // IconButton(icon: const Icon(Icons.favorite_border), onPressed: () {}),
-          ],
-        ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 30.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PaymentOptionsScreen(),
+                  },),
+                // IconButton(icon: const Icon(Icons.favorite_border), onPressed: () {}),
+              ],
+            ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PaymentOptionsScreen(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF1E535B),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    ),
+                    child: const Text(
+                      "Proceed to pay",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            backgroundColor: Colors.white,
+            body: BlocBuilder<PhotographerBloc, PhotographerState>(
+              builder: (context, state) {
+                if (state is PhotographerLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is PhotographerLoaded) {
+                  return SingleChildScrollView(
+                    child: CustomBookService(
+                      data: state.bookServiceDetails,
+                      onChangeAddress: () => _showChangeAddress(context),
                     ),
                   );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1E535B),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                ),
-                child: const Text(
-                  "Proceed to pay",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-            ],
+                } else if (state is PhotographerError) {
+                  return Center(child: Text(state.message));
+                }
+                return const Center(child: Text("Select a photographer"));
+              },
+            ),
           ),
-        ),
-        backgroundColor: Colors.white,
-        body: BlocBuilder<PhotographerBloc, PhotographerState>(
-          builder: (context, state) {
-            if (state is PhotographerLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is PhotographerLoaded) {
-              return SingleChildScrollView(
-                child: CustomBookService(
-                  data: state.bookServiceDetails,
-                  onChangeAddress: () => _showChangeAddress(context),
-                ),
-              );
-            } else if (state is PhotographerError) {
-              return Center(child: Text(state.message));
-            }
-            return const Center(child: Text("Select a photographer"));
-          },
-        ),
-      ),
-    );
+        ));
   }
 
 }
@@ -159,13 +178,13 @@ void _showChangeAddress(BuildContext context) {
 
               ),
 
-          Text(
-            'Change Address',
-            style: TextFontStyle.textFontStyle(
-              16,
-              Color(0xFF575959),
-              FontWeight.w600,
-            )),
+              Text(
+                  'Change Address',
+                  style: TextFontStyle.textFontStyle(
+                    16,
+                    Color(0xFF575959),
+                    FontWeight.w600,
+                  )),
               SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
@@ -206,21 +225,54 @@ void _showChangeAddress(BuildContext context) {
               ),
               SizedBox(height: 16),
 
-              /// Address Tiles
-              _addressTile(
-                title: 'Financial District',
-                subtitle: 'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit,',
+              /// List of addresses
+              Column(
+                children: [
+                  _addressTile(
+                    title: 'Financial District',
+                    subtitle:
+                    'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit.',
+                    onActionPressed: () {
+                      _showEditAddress(
+                        context,
+                        title: "Financial District",
+                        subtitle:
+                        "Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit.",
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  _addressTile(
+                    title: 'Madhapur',
+                    subtitle:
+                    'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit.',
+                    onActionPressed: () {
+                      _showEditAddress(
+                        context,
+                        title: "Madhapur",
+                        subtitle:
+                        "Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit.",
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  _addressTile(
+                    title: 'Hitech City',
+                    subtitle:
+                    'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit.',
+                    onActionPressed: () {
+                      _showEditAddress(
+                        context,
+                        title: "Hitech City",
+                        subtitle:
+                        "Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit.",
+                      );
+                    },
+                  ),
+                ],
               ),
-              SizedBox(height: 12),
-              _addressTile(
-                title: 'Madhapur',
-                subtitle: 'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit,',
-              ),
-              SizedBox(height: 12),
-              _addressTile(
-                title: 'Hitech City',
-                subtitle: 'Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit,',
-              ),
+              const SizedBox(height: 20),
+
               // SizedBox(height: 12),
               // _addressTile(
               //   title: 'Gachibowli',
@@ -235,16 +287,23 @@ void _showChangeAddress(BuildContext context) {
   );
 }
 
-Widget _addressTile({required String title, required String subtitle}) {
+/// Address Tile Widget
+Widget _addressTile({
+  required String title,
+  required String subtitle,
+  String actionText = "Edit",
+  VoidCallback? onActionPressed,
+}) {
   return Container(
-    padding: EdgeInsets.all(12),
+    padding: const EdgeInsets.all(12),
     decoration: BoxDecoration(
-      color: Color(0xFFFFF7F1), // light background
+      color: const Color(0xFFFFF7F1),
       borderRadius: BorderRadius.circular(8),
     ),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        /// Title + Subtitle
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,49 +312,175 @@ Widget _addressTile({required String title, required String subtitle}) {
                 title,
                 style: TextFontStyle.textFontStyle(
                   14,
-                  Color(0xFF575959),
-                  FontWeight.w500,
+                  const Color(0xFF575959),
+                  FontWeight.w600,
                 ),
-
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
                 subtitle,
                 style: TextFontStyle.textFontStyle(
                   13,
-                  Color(0xFF757575),
+                  const Color(0xFF757575),
                   FontWeight.w400,
                 ),
-
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
         ),
+
+        /// Action Button
         OutlinedButton(
-          onPressed: () {},
+          onPressed: onActionPressed,
           style: OutlinedButton.styleFrom(
-            minimumSize: Size(45, 30),
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-            side: BorderSide(color: Color(0xFF1E535B)),
+            minimumSize: const Size(45, 30),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            side: const BorderSide(color: Color(0xFF1E535B)),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6),
             ),
           ),
           child: Text(
-            'Edit',
+            actionText,
             style: TextFontStyle.textFontStyle(
               13,
-              Color(0xFF1E535B),
+              const Color(0xFF1E535B),
               FontWeight.w500,
             ),
-          )
+          ),
         ),
       ],
     ),
   );
 }
 
+/// Show bottom sheet to edit or add address
+void _showEditAddress(BuildContext context,
+    {required String title, required String subtitle, bool isNew = false}) {
+  final titleController = TextEditingController(text: title);
+  final subtitleController = TextEditingController(text: subtitle);
 
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    ),
+    builder: (context) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          top: 10,
+          left: 16,
+          right: 16,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Heading
+            Text(
+              isNew ? "Add New Address" : "Edit Address",
+              style: TextFontStyle.textFontStyle(
+                18,
+                const Color(0xFF575959),
+                FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Row for Title
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Title",
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(height: 5),
+                      TextField(
+                        controller: titleController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          isDense: true,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+
+            // Row for Subtitle
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Subtitle",
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(height: 5),
+                      TextField(
+                        controller: subtitleController,
+                        maxLines: 2,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          isDense: true,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+
+            // Save/Add Button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF1E535B),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () {
+                  print(
+                    "Saved Address: ${titleController.text} - ${subtitleController.text}",
+                  );
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  isNew ? "Add" : "Save",
+                  style: TextFontStyle.textFontStyle(
+                    14,
+                    Colors.white,
+                    FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      );
+    },
+  );
+
+}
 void _showAddNewAddress(BuildContext context) {
   showModalBottomSheet(
     context: context,
@@ -393,7 +578,7 @@ void _showAddNewAddress(BuildContext context) {
                       'Save Address',
                       style: TextFontStyle.textFontStyle(
                         16,
-                         Colors.white,
+                        Colors.white,
                         FontWeight.w400,
                       ),
 
@@ -526,11 +711,11 @@ Widget _buildChargeRow(String label, String value, {bool isBold = false, Color? 
       Text(
         label,
 
-      style: TextFontStyle.textFontStyle(
-        14,
-        const Color(0xFF575959),
-        FontWeight.w400,
-      ),
+        style: TextFontStyle.textFontStyle(
+          14,
+          const Color(0xFF575959),
+          FontWeight.w400,
+        ),
 
       ),
       Text(

@@ -108,20 +108,11 @@ class MehndiScreen extends StatelessWidget {
                         categories: state.mehndiTheme,
                         showViewAll: false,
                         onCategoryTap: (String categoryName) {
-                          // Map category names to route names
-                          final Map<String, String> categoryRoutes = {
-                            // Add more categories and routes here
-                          };
-
-                          final routeName = categoryRoutes[categoryName];
-                          if (routeName != null) {
-                            Navigator.pushNamed(context, routeName);
-                          } else {
-                            // Handle cases where a route is not mapped
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('No route available for $categoryName')),
-                            );
-                          }
+                          // Directly navigate to DecorationThemeScreen for all categories
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MehndiService(mehndiArtist: {},)),
+                          );
                         },
                         onViewAll: (){},
                       ),

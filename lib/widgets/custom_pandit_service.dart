@@ -32,7 +32,7 @@ class CustomPanditCardWidgets {
                   GestureDetector(
                     onTap: onViewAll,
                     child: Text(
-                      'View All',
+                      'View all',
                       style: TextFontStyle.textFontStyle(14, Colors.blue, FontWeight.w500),
                     ),
                   ),
@@ -96,13 +96,13 @@ class CustomPanditCardWidgets {
                         child: item['image'] != null && item['image']!.startsWith('assets/')
                             ? Image.asset(
                           item['image']!,
-                          height: screenHeight * 0.16, // 🔹 responsive height
+                          height: screenHeight * 0.15, // 🔹 responsive height
                           width: double.infinity,
                           fit: BoxFit.cover,
                         )
                             : Image.network(
                           item['image'] ?? '',
-                          height: screenHeight * 0.14, // 🔹 responsive height
+                          height: screenHeight * 0.15, // 🔹 responsive height
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
@@ -136,7 +136,7 @@ class CustomPanditCardWidgets {
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.025,
-                      vertical: screenHeight * 0.018,
+                      vertical: screenHeight * 0.012,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
