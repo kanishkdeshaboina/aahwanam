@@ -2,25 +2,28 @@
 import 'package:flutter/material.dart';
 
 class ResponsiveUtils {
-  static const double _designWidth = 390; // Reference width (your emulator width)
-  static const double _designHeight = 844; // Reference height
+  // static const double _designWidth = 390; // Reference width (your emulator width)
+  // static const double _designHeight = 844; // Reference height
+  static const double _designWidth = 375; // iPhone 12 Pro width
+  static const double _designHeight = 812; // iPhone 12 Pro height
 
   // Get responsive width based on screen width
   static double getResponsiveWidth(BuildContext context, double width) {
     final screenWidth = MediaQuery.of(context).size.width;
-    return width * (screenWidth / _designWidth);
+    return (width / _designWidth) * screenWidth;
   }
 
   // Get responsive height based on screen height
   static double getResponsiveHeight(BuildContext context, double height) {
     final screenHeight = MediaQuery.of(context).size.height;
-    return height * (screenHeight / _designHeight);
+    return (height / _designHeight) * screenHeight;
   }
 
   // Get responsive font size
   static double getResponsiveFontSize(BuildContext context, double fontSize) {
     final screenWidth = MediaQuery.of(context).size.width;
     final scaleFactor = screenWidth / _designWidth;
+    return fontSize * scaleFactor;
 
     // Limit scaling to reasonable bounds
     if (scaleFactor > 1.5) return fontSize * 1.5;
@@ -32,17 +35,19 @@ class ResponsiveUtils {
   // Get responsive padding
   static EdgeInsets getResponsivePadding(
       BuildContext context, {
-        double horizontal = 0,
-        double vertical = 0,
-        double all = 0,
+        double? all,
+        double? horizontal,
+        double? vertical,
+        double? left,
+        double? top,
+        double? right,
+        double? bottom,
       }) {
-    if (all > 0) {
-      final value = getResponsiveWidth(context, all);
-      return EdgeInsets.all(value);
-    }
-    return EdgeInsets.symmetric(
-      horizontal: getResponsiveWidth(context, horizontal),
-      vertical: getResponsiveHeight(context, vertical),
+    return EdgeInsets.only(
+      left: left ?? horizontal ?? all ?? 0,
+      top: top ?? vertical ?? all ?? 0,
+      right: right ?? horizontal ?? all ?? 0,
+      bottom: bottom ?? vertical ?? all ?? 0,
     );
   }
 

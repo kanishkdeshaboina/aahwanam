@@ -1,12 +1,8 @@
 import 'package:aahwanam/screens/account/detailed_all_booking_screen.dart';
-import 'package:aahwanam/screens/account/detailed_inprogress_screen.dart';
-import 'package:aahwanam/screens/dashboard/dashboard_screen.dart';
-import 'package:aahwanam/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:aahwanam/blocs/account/account_bloc.dart';
 import 'package:aahwanam/blocs/account/account_state.dart';
-
 import '../../services/decoration/decoration_theme.dart';
 import '../../services/makeup_hair_service/MakeupDecor.dart';
 import '../../utils/responsive_utils.dart';
@@ -14,7 +10,6 @@ import '../../widgets/package_card.dart';
 import 'account_screen.dart';
 
 class BookingScreen extends StatefulWidget {
-  // const BookingScreen({super.key});
   bool isAllBookingsSelected = true;
 
   @override
@@ -41,7 +36,6 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget build(BuildContext context) {
     final scalingFactor = _getScalingFactor(context);
     final isTablet = ResponsiveUtils.isTablet(context);
-
     return BlocBuilder<AccountBloc, AccountState>(
       builder: (context, state) {
         if (state is AccountLoading) {
