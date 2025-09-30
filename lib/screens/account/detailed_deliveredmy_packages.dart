@@ -1,15 +1,15 @@
 import 'package:aahwanam/screens/account/RateServiceScreen.dart';
 import 'package:flutter/material.dart';
-
+import '../../utils/responsive_utils.dart';
 import '../../widgets/custom_text_field.dart';
 
 class DetailedDeliveredmyPackagesScreen extends StatefulWidget {
   final Map<String, dynamic> package;
 
   const DetailedDeliveredmyPackagesScreen({
-    Key? key,
+    super.key,
     required this.package,
-  }) : super(key: key);
+  });
 
   @override
   State<DetailedDeliveredmyPackagesScreen> createState() =>
@@ -20,18 +20,6 @@ class _DetailedDeliveredmyPackagesScreenState
     extends State<DetailedDeliveredmyPackagesScreen> {
   @override
   Widget build(BuildContext context) {
-    // Screen size
-    final size = MediaQuery.of(context).size;
-    final screenWidth = size.width;
-    final screenHeight = size.height;
-
-    // Responsive scaling factors
-    double textScale = screenWidth / 390; // base iPhone width
-    if (textScale < 0.8) textScale = 0.8;
-    if (textScale > 1.3) textScale = 1.3;
-
-    double imageScale = screenWidth / 390;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -39,23 +27,30 @@ class _DetailedDeliveredmyPackagesScreenState
         title: Text(
           "My Packages",
           style: TextFontStyle.textFontStyle(
-              16 * textScale, const Color(0xFF575959), FontWeight.w500),
+            ResponsiveUtils.getResponsiveFontSize(context, 16),
+            const Color(0xFF575959),
+            FontWeight.w500,
+          ),
         ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
-          padding: EdgeInsets.only(left: screenWidth * 0.03),
-          icon: const Icon(
+          padding: EdgeInsets.only(
+              left: ResponsiveUtils.getResponsiveWidth(context, 12)),
+          icon: Icon(
             Icons.arrow_back_ios,
-            size: 18,
-            color: Color(0xFF575959),
+            size: ResponsiveUtils.getResponsiveFontSize(context, 18),
+            color: const Color(0xFF575959),
           ),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.share),
+            icon: Icon(
+              Icons.share,
+              size: ResponsiveUtils.getResponsiveFontSize(context, 20),
+            ),
             onPressed: () {
               // Share functionality
             },
@@ -63,46 +58,63 @@ class _DetailedDeliveredmyPackagesScreenState
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+        padding: EdgeInsets.symmetric(
+            horizontal: ResponsiveUtils.getResponsiveWidth(context, 16)),
         child: ListView(
           children: [
             Center(
               child: Text(
                 "Birthday Party Package",
                 style: TextFontStyle.textFontStyle(
-                    14 * textScale, const Color(0xFF575959), FontWeight.w500),
+                  ResponsiveUtils.getResponsiveFontSize(context, 14),
+                  const Color(0xFF575959),
+                  FontWeight.w500,
+                ),
               ),
             ),
-            SizedBox(height: screenHeight * 0.02),
-            ..._buildPackageItems(screenWidth, imageScale, textScale),
-            SizedBox(height: screenHeight * 0.01),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 20)),
+            ..._buildPackageItems(),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 10)),
 
             // Bill Details Divider
-            _buildSectionDivider("Bill Details", textScale),
-            SizedBox(height: screenHeight * 0.010),
-            _buildBillRow("Package Charges", "₹ 32,000",
-                showInfo: true, bold: false, textScale: textScale),
-            _buildBillRow("Platform Fee", "₹ 100",
-                bold: false, textScale: textScale),
-            _buildBillRow("Transport Fee", "FREE",
-                bold: false, textScale: textScale),
-            _buildBillRow("Paid", "₹ 32,100",
-                bold: true, textScale: textScale),
-            SizedBox(height: screenHeight * 0.02),
+            _buildSectionDivider("Bill Details"),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 10)),
+            _buildBillRow(
+              "Package Charges",
+              "₹ 32,000",
+              showInfo: true,
+              infoDetails:
+              "Total package price including all services selected. Taxes included.",
+            ),
+            _buildBillRow(
+              "Platform Fee",
+              "₹ 100",
+              showInfo: true,
+              infoDetails:
+              "This fee covers platform usage, service handling, and support charges.",
+            ),
+            _buildBillRow(
+              "Transport Fee",
+              "FREE",
+              showInfo: true,
+              infoDetails:
+              "Delivery and transport are free for this package.",
+            ),
+            _buildBillRow("Paid", "₹ 32,100", bold: true),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 20)),
 
             // Rate Service Divider
-            _buildSectionDivider("Rate Service", textScale),
-            SizedBox(height: screenHeight * 0.020),
-            _buildRatingRow(screenWidth, textScale),
-            SizedBox(height: screenHeight * 0.03),
+            _buildSectionDivider("Rate Service"),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 20)),
+            _buildRatingRow(),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 30)),
           ],
         ),
       ),
     );
   }
 
-  List<Widget> _buildPackageItems(
-      double screenWidth, double imageScale, double textScale) {
+  List<Widget> _buildPackageItems() {
     final services = [
       {
         "title": "Decoration",
@@ -128,8 +140,9 @@ class _DetailedDeliveredmyPackagesScreenState
 
     return services.map((service) {
       return Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(8),
+        margin: EdgeInsets.only(
+            bottom: ResponsiveUtils.getResponsiveHeight(context, 12)),
+        padding: ResponsiveUtils.getResponsivePadding(context, all: 8),
         decoration: BoxDecoration(
           color: const Color(0xFFFFF2E4),
           borderRadius: BorderRadius.circular(10),
@@ -140,12 +153,12 @@ class _DetailedDeliveredmyPackagesScreenState
               borderRadius: BorderRadius.circular(8),
               child: Image.asset(
                 service["image"]!,
-                width: screenWidth * 0.2,
-                height: screenWidth * 0.15,
+                width: ResponsiveUtils.getResponsiveWidth(context, 67),
+                height: ResponsiveUtils.getResponsiveHeight(context, 52),
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: ResponsiveUtils.getResponsiveWidth(context, 12)),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,17 +166,26 @@ class _DetailedDeliveredmyPackagesScreenState
                   Text(
                     service["title"]!,
                     style: TextFontStyle.textFontStyle(
-                        12 * textScale, const Color(0XFF575959), FontWeight.w500),
+                      ResponsiveUtils.getResponsiveFontSize(context, 12),
+                      const Color(0XFF575959),
+                      FontWeight.w500,
+                    ),
                   ),
                   Text(
                     service["price"]!,
                     style: TextFontStyle.textFontStyle(
-                        12 * textScale, const Color(0XFF1E535B), FontWeight.w600),
+                      ResponsiveUtils.getResponsiveFontSize(context, 12),
+                      const Color(0XFF1E535B),
+                      FontWeight.w600,
+                    ),
                   ),
                   Text(
                     "Delivered on–23–03–25",
                     style: TextFontStyle.textFontStyle(
-                        11 * textScale, const Color(0XFF757575), FontWeight.w400),
+                      ResponsiveUtils.getResponsiveFontSize(context, 11),
+                      const Color(0XFF757575),
+                      FontWeight.w400,
+                    ),
                   ),
                 ],
               ),
@@ -175,9 +197,10 @@ class _DetailedDeliveredmyPackagesScreenState
   }
 
   Widget _buildBillRow(String label, String value,
-      {bool showInfo = false, bool bold = false, required double textScale}) {
+      {bool showInfo = false, bool bold = false, String? infoDetails}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding:
+      EdgeInsets.symmetric(vertical: ResponsiveUtils.getResponsiveHeight(context, 4)),
       child: Row(
         children: [
           Expanded(
@@ -186,13 +209,21 @@ class _DetailedDeliveredmyPackagesScreenState
                 Text(
                   label,
                   style: TextFontStyle.textFontStyle(
-                      12 * textScale,
-                      const Color(0XFF575959),
-                      bold ? FontWeight.bold : FontWeight.normal),
+                    ResponsiveUtils.getResponsiveFontSize(context, 12),
+                    const Color(0XFF575959),
+                    bold ? FontWeight.bold : FontWeight.normal,
+                  ),
                 ),
                 if (showInfo) ...[
-                  const SizedBox(width: 4),
-                  const Icon(Icons.info_outline, size: 16),
+                  SizedBox(width: ResponsiveUtils.getResponsiveWidth(context, 4)),
+                  GestureDetector(
+                    onTap: () => _showInfoBottomSheet(label, value, infoDetails),
+                    child: Icon(
+                      Icons.info_outline,
+                      size: ResponsiveUtils.getResponsiveFontSize(context, 16),
+                      color: const Color(0xFF575959),
+                    ),
+                  ),
                 ]
               ],
             ),
@@ -200,16 +231,65 @@ class _DetailedDeliveredmyPackagesScreenState
           Text(
             value,
             style: TextFontStyle.textFontStyle(
-                12 * textScale,
-                const Color(0XFF575959),
-                bold ? FontWeight.bold : FontWeight.normal),
+              ResponsiveUtils.getResponsiveFontSize(context, 12),
+              const Color(0XFF575959),
+              bold ? FontWeight.bold : FontWeight.normal,
+            ),
           )
         ],
       ),
     );
   }
 
-  Widget _buildRatingRow(double screenWidth, double textScale) {
+  void _showInfoBottomSheet(String label, String value, String? infoDetails) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "$label • $value",
+                      style: TextFontStyle.textFontStyle(
+                        ResponsiveUtils.getResponsiveFontSize(context, 14),
+                        const Color(0xFF575959),
+                        FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  )
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                infoDetails ?? "No details available",
+                style: TextFontStyle.textFontStyle(
+                  ResponsiveUtils.getResponsiveFontSize(context, 12),
+                  const Color(0xFF575959),
+                  FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildRatingRow() {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -222,11 +302,12 @@ class _DetailedDeliveredmyPackagesScreenState
         children: List.generate(
           5,
               (index) => Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+            padding: EdgeInsets.symmetric(
+                horizontal: ResponsiveUtils.getResponsiveWidth(context, 16)),
             child: Icon(
               index < 4 ? Icons.star : Icons.star_border,
               color: Colors.orange,
-              size: 28 * textScale,
+              size: ResponsiveUtils.getResponsiveFontSize(context, 28),
             ),
           ),
         ),
@@ -234,17 +315,20 @@ class _DetailedDeliveredmyPackagesScreenState
     );
   }
 
-  Widget _buildSectionDivider(String title, double textScale) {
+  Widget _buildSectionDivider(String title) {
     return Row(
       children: [
         const Expanded(child: Divider(thickness: 1)),
-        const SizedBox(width: 8),
+        SizedBox(width: ResponsiveUtils.getResponsiveWidth(context, 8)),
         Text(
           title,
           style: TextFontStyle.textFontStyle(
-              14 * textScale, const Color(0XFF575959), FontWeight.w500),
+            ResponsiveUtils.getResponsiveFontSize(context, 14),
+            const Color(0XFF575959),
+            FontWeight.w500,
+          ),
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: ResponsiveUtils.getResponsiveWidth(context, 8)),
         const Expanded(child: Divider(thickness: 1)),
       ],
     );

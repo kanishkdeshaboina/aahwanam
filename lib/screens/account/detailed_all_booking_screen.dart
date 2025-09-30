@@ -1,20 +1,13 @@
-import 'package:aahwanam/blocs/account/account_bloc.dart';
-import 'package:aahwanam/blocs/account/account_event.dart';
-import 'package:aahwanam/blocs/account/account_state.dart';
-import 'package:aahwanam/screens/account/booking_screen.dart';
 import 'package:aahwanam/screens/dashboard/e_invitation_screen.dart';
 import 'package:aahwanam/services/services_screen.dart';
 import 'package:aahwanam/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../widgets/package_card.dart';
+import '../../utils/responsive_utils.dart';
 
 class DetailedAllBookingScreen extends StatefulWidget {
   final Map<String, dynamic> package;
 
-  const DetailedAllBookingScreen({required this.package, Key? key})
-      : super(key: key);
+  const DetailedAllBookingScreen({required this.package, super.key});
 
   @override
   State<DetailedAllBookingScreen> createState() =>
@@ -37,19 +30,23 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        title:  Text("Bookings",
+        title: Text(
+          "Bookings",
           style: TextFontStyle.textFontStyle(
-            18,                         // Font size
-            Color(0xFF575959),          // Text color
-            FontWeight.w500,            // Font weight
+            ResponsiveUtils.getResponsiveFontSize(context, 18),
+            const Color(0xFF575959),
+            FontWeight.w500,
           ),
         ),
         leading: IconButton(
-          padding: const EdgeInsets.only(top: 2, left: 12),
-          icon: const Icon(
+          padding: EdgeInsets.only(
+            top: ResponsiveUtils.getResponsiveHeight(context, 2),
+            left: ResponsiveUtils.getResponsiveWidth(context, 12),
+          ),
+          icon: Icon(
             Icons.arrow_back_ios,
-            size: 18,
-            color: Color(0xFF575959),
+            size: ResponsiveUtils.getResponsiveFontSize(context, 18),
+            color: const Color(0xFF575959),
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -57,7 +54,12 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(18, 0, 16, 12),
+        padding: EdgeInsets.fromLTRB(
+          ResponsiveUtils.getResponsiveWidth(context, 18),
+          0,
+          ResponsiveUtils.getResponsiveWidth(context, 16),
+          ResponsiveUtils.getResponsiveHeight(context, 12),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -66,47 +68,64 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
               elevation: 4,
               color: const Color(0xFFFFEFDF),
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: ResponsiveUtils.getResponsivePadding(context, all: 8),
                 child: Row(
-                  // <-- this is key: use Row, not Column
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Stack(
-                      children: [
-                        // LEFT SIDE: Image
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.asset(
-                            package['imagePath'],
-                            fit: BoxFit.cover,
-                            width: 80,
-                            height: 90,
-                          ),
-                        ),
-                      ],
+                    // LEFT SIDE: Image
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset(
+                        package['imagePath'],
+                        fit: BoxFit.cover,
+                        width:
+                        ResponsiveUtils.getResponsiveWidth(context, 80),
+                        height:
+                        ResponsiveUtils.getResponsiveHeight(context, 85),
+                      ),
                     ),
 
-                    const SizedBox(width: 10),
+                    SizedBox(
+                        width: ResponsiveUtils.getResponsiveWidth(context, 6)),
                     // RIGHT SIDE: Content
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(0),
+                        padding: EdgeInsets.zero,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               package['title'],
-                              style:TextFontStyle.textFontStyle(12,Color(0xFF575959), FontWeight.w600),
+                              style: TextFontStyle.textFontStyle(
+                                ResponsiveUtils.getResponsiveFontSize(
+                                    context, 12),
+                                const Color(0xFF575959),
+                                FontWeight.w600,
+                              ),
                             ),
-                            const SizedBox(height: 6),
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveHeight(
+                                    context, 4)),
                             Text(
                               package['description'],
-                              style:TextFontStyle.textFontStyle(13,Color(0xFF757575), FontWeight.w400),
+                              style: TextFontStyle.textFontStyle(
+                                ResponsiveUtils.getResponsiveFontSize(
+                                    context, 12),
+                                const Color(0xFF757575),
+                                FontWeight.w400,
+                              ),
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveHeight(
+                                    context, 10)),
                             Text(
                               "Price: ₹${package['price']}",
-                              style:TextFontStyle.textFontStyle(13,Color(0xFF1E535B), FontWeight.w600),
+                              style: TextFontStyle.textFontStyle(
+                                ResponsiveUtils.getResponsiveFontSize(
+                                    context, 13),
+                                const Color(0xFF1E535B),
+                                FontWeight.w600,
+                              ),
                             ),
                           ],
                         ),
@@ -117,7 +136,7 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
               ),
             ),
 
-            SizedBox(height: 10),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 10)),
 
             // Accordion: Event Details
             _buildAccordion(
@@ -136,24 +155,42 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Event Date",
-                              style:TextFontStyle.textFontStyle(14,Color(0xFF575959), FontWeight.w500),
+                            Text(
+                              "Event Date",
+                              style: TextFontStyle.textFontStyle(
+                                ResponsiveUtils.getResponsiveFontSize(
+                                    context, 14),
+                                const Color(0xFF575959),
+                                FontWeight.w500,
+                              ),
                             ),
-                            const SizedBox(height: 6),
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveHeight(
+                                    context, 6)),
                             _buildInputBox("22, Feb 2025"),
                           ],
                         ),
                       ),
-                      const SizedBox(width: 16),
+                      SizedBox(
+                          width: ResponsiveUtils.getResponsiveWidth(
+                              context, 16)),
                       // Event Time
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Event Time",
-                              style:TextFontStyle.textFontStyle(14,Color(0xFF575959), FontWeight.w500),
+                            Text(
+                              "Event Time",
+                              style: TextFontStyle.textFontStyle(
+                                ResponsiveUtils.getResponsiveFontSize(
+                                    context, 14),
+                                const Color(0xFF575959),
+                                FontWeight.w500,
+                              ),
                             ),
-                            const SizedBox(height: 6),
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveHeight(
+                                    context, 6)),
                             _buildInputBox("11:15 PM"),
                           ],
                         ),
@@ -161,22 +198,34 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
                     ],
                   ),
 
-                  const SizedBox(height: 14),
+                  SizedBox(
+                      height:
+                      ResponsiveUtils.getResponsiveHeight(context, 14)),
 
                   // Event Address
-                  Text("Event Address",
-                    style:TextFontStyle.textFontStyle(14,Color(0xFF575959), FontWeight.w500),
-
+                  Text(
+                    "Event Address",
+                    style: TextFontStyle.textFontStyle(
+                      ResponsiveUtils.getResponsiveFontSize(context, 14),
+                      const Color(0xFF575959),
+                      FontWeight.w500,
+                    ),
                   ),
-                  const SizedBox(height: 6),
-                  _buildInputBoxWithTitle("Financial District, Hyderabad",
-                      "Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit,"),
+                  SizedBox(
+                      height:
+                      ResponsiveUtils.getResponsiveHeight(context, 6)),
+                  _buildInputBoxWithTitle(
+                    "Financial District, Hyderabad",
+                    "Lorem ipsum dolor sit amet, dolor consectetur adipiscing elit,",
+                  ),
 
-                  const SizedBox(height: 10),
+                  SizedBox(
+                      height:
+                      ResponsiveUtils.getResponsiveHeight(context, 10)),
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 6)),
 
             // Accordion: Bill Details
             _buildAccordion(
@@ -195,7 +244,8 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 10)),
+
             // Accordion: Booking Status
             _buildAccordion(
               title: "Booking Status",
@@ -203,61 +253,86 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
               onToggle: () =>
                   setState(() => _showStatusDetails = !_showStatusDetails),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), // customize as needed
+                padding: EdgeInsets.symmetric(
+                  horizontal: ResponsiveUtils.getResponsiveWidth(context, 8),
+                  vertical: ResponsiveUtils.getResponsiveHeight(context, 8),
+                ),
                 child: Column(
                   children: [
                     _buildStatusStep("Booking Confirmed", "22, Feb", true),
                     _buildStatusStep("Artist Assigned", "Today", true),
-                    _buildStatusStep("Delivery", "25, Feb", false, isLast: true),
+                    _buildStatusStep("Delivery", "25, Feb", false,
+                        isLast: true),
                   ],
                 ),
               ),
             ),
 
-            SizedBox(height: 20),
-            Text("Artist assigned for you",
-              style:TextFontStyle.textFontStyle(16,Color(0xFF575959), FontWeight.w500),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 20)),
+            Text(
+              "Artist assigned for you",
+              style: TextFontStyle.textFontStyle(
+                ResponsiveUtils.getResponsiveFontSize(context, 16),
+                const Color(0xFF575959),
+                FontWeight.w500,
+              ),
             ),
 
-            SizedBox(height: 10),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 10)),
 
             // Artist Card
             Card(
               color: const Color(0xFFF8F8F8),
               shape: RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.circular(33), // Set border radius here
+                borderRadius: BorderRadius.circular(33),
               ),
               child: ListTile(
                 leading: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: CircleAvatar(
+                  width: ResponsiveUtils.getResponsiveWidth(context, 50),
+                  height: ResponsiveUtils.getResponsiveHeight(context, 50),
+                  child: const CircleAvatar(
                     backgroundImage:
                     AssetImage('assets/images/profile_pic.png'),
                   ),
                 ),
-                title: Text("Janey Cooper",
-                  style:TextFontStyle.textFontStyle(12,Color(0xFF575959), FontWeight.w500),),
-                subtitle: Text("Support Team",
-                  style:TextFontStyle.textFontStyle(10,Color(0xFF575959), FontWeight.w300),),
+                title: Text(
+                  "Janey Cooper",
+                  style: TextFontStyle.textFontStyle(
+                    ResponsiveUtils.getResponsiveFontSize(context, 12),
+                    const Color(0xFF575959),
+                    FontWeight.w500,
+                  ),
+                ),
+                subtitle: Text(
+                  "Support Team",
+                  style: TextFontStyle.textFontStyle(
+                    ResponsiveUtils.getResponsiveFontSize(context, 10),
+                    const Color(0xFF575959),
+                    FontWeight.w300,
+                  ),
+                ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     _buildCircleIcon(Icons.call),
-                    const SizedBox(width: 8),
+                    SizedBox(
+                        width:
+                        ResponsiveUtils.getResponsiveWidth(context, 8)),
                     _buildCircleIcon(Icons.chat),
                   ],
                 ),
               ),
             ),
 
-            SizedBox(height: 10),
+            SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 10)),
           ],
         ),
       ),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        padding: EdgeInsets.symmetric(
+          horizontal: ResponsiveUtils.getResponsiveWidth(context, 20),
+          vertical: ResponsiveUtils.getResponsiveHeight(context, 24),
+        ),
         color: Colors.white,
         child: Row(
           children: [
@@ -266,43 +341,63 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EInvitationScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => EInvitationScreen()),
                   );
-                  // TODO: Add send invitation logic
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.black,
-                  side: const BorderSide(color: Colors.black26),
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  padding: EdgeInsets.symmetric(
+                    vertical:
+                    ResponsiveUtils.getResponsiveHeight(context, 12),
+                  ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(14),
+                    side: const BorderSide(
+                      color: Color(0xFF1E535B),
+                      width: 1.2,
+                    ),
                   ),
                 ),
-                child:  Text("Send Invitation",
-                  style: TextFontStyle.textFontStyle(14, Color(0xFF1E535B), FontWeight.w500),
+                child: Text(
+                  "Send Invitation",
+                  style: TextFontStyle.textFontStyle(
+                    ResponsiveUtils.getResponsiveFontSize(context, 13),
+                    const Color(0xFF1E535B),
+                    FontWeight.w500,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: ResponsiveUtils.getResponsiveWidth(context, 12)),
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ServicesScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => ServicesScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1E535B),
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  padding: EdgeInsets.symmetric(
+                    vertical:
+                    ResponsiveUtils.getResponsiveHeight(context, 12),
+                  ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                child: Text("Other Services",
-                  style: TextFontStyle.textFontStyle(14, Color(0xFFFFFFFF), FontWeight.w500),
+                child: Text(
+                  "Other Services",
+                  style: TextFontStyle.textFontStyle(
+                    ResponsiveUtils.getResponsiveFontSize(context, 13),
+                    const Color(0xFFFFFFFF),
+                    FontWeight.w500,
+                  ),
                 ),
               ),
             ),
@@ -323,8 +418,13 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
       child: Column(
         children: [
           ListTile(
-            title: Text(title,
-              style:TextFontStyle.textFontStyle(16,Color(0xFF575959), FontWeight.w500),
+            title: Text(
+              title,
+              style: TextFontStyle.textFontStyle(
+                ResponsiveUtils.getResponsiveFontSize(context, 16),
+                const Color(0xFF575959),
+                FontWeight.w500,
+              ),
             ),
             trailing: IconButton(
               icon: Icon(expanded
@@ -335,9 +435,12 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
           ),
           if (expanded)
             Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: child),
+              padding: EdgeInsets.symmetric(
+                horizontal: ResponsiveUtils.getResponsiveWidth(context, 16),
+                vertical: ResponsiveUtils.getResponsiveHeight(context, 8),
+              ),
+              child: child,
+            ),
         ],
       ),
     );
@@ -345,17 +448,21 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
 
   Widget _buildCircleIcon(IconData icon) {
     return Container(
-      width: 36,
-      height: 36,
-      decoration: BoxDecoration(
-        color: Color(0xFF1E535B), // Background color
+      width: ResponsiveUtils.getResponsiveWidth(context, 36),
+      height: ResponsiveUtils.getResponsiveHeight(context, 36),
+      decoration: const BoxDecoration(
+        color: Color(0xFF1E535B),
         shape: BoxShape.circle,
       ),
       child: IconButton(
-        icon: Icon(icon, color: Colors.white, size: 18), // White icon
+        icon: Icon(
+          icon,
+          color: Colors.white,
+          size: ResponsiveUtils.getResponsiveFontSize(context, 18),
+        ),
         onPressed: () {},
-        padding: EdgeInsets.zero, // Remove extra padding
-        constraints: BoxConstraints(), // Remove IconButton constraints
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints(),
       ),
     );
   }
@@ -371,29 +478,42 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
     FontWeight valueWeight;
 
     if (isPaid) {
-      valueColor = const Color(0xFF1E535B); // Dark teal
+      valueColor = const Color(0xFF1E535B);
       valueWeight = FontWeight.bold;
     } else if (isFree) {
       valueColor = Colors.green;
       valueWeight = FontWeight.w600;
     } else if (isPaidValue) {
-      valueColor = Color(0xFF1E535B);
+      valueColor = const Color(0xFF1E535B);
       valueWeight = FontWeight.w600;
     } else {
       valueColor = Colors.grey;
       valueWeight = FontWeight.w500;
     }
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(
+        vertical: ResponsiveUtils.getResponsiveHeight(context, 4),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style: TextStyle(
-                  fontWeight: valueWeight, color: valueColor, fontSize: 14, fontFamily: 'Poppins')),
-          Text(value,
-              style: TextStyle(
-                  fontWeight: valueWeight, color: valueColor, fontSize: 14, fontFamily: 'Poppins')),
+          Text(
+            label,
+            style: TextFontStyle.textFontStyle(
+              ResponsiveUtils.getResponsiveFontSize(context, 14),
+              valueColor,
+              valueWeight,
+            ),
+          ),
+          Text(
+            value,
+            style: TextFontStyle.textFontStyle(
+              ResponsiveUtils.getResponsiveFontSize(context, 14),
+              valueColor,
+              valueWeight,
+            ),
+          ),
         ],
       ),
     );
@@ -402,7 +522,10 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
   Widget _buildInputBoxWithTitle(String title, String description) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      padding: EdgeInsets.symmetric(
+        horizontal: ResponsiveUtils.getResponsiveWidth(context, 12),
+        vertical: ResponsiveUtils.getResponsiveHeight(context, 12),
+      ),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300),
         borderRadius: BorderRadius.circular(8),
@@ -412,12 +535,20 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
         children: [
           Text(
             title,
-            style:TextFontStyle.textFontStyle(14,Colors.black87, FontWeight.w300),
+            style: TextFontStyle.textFontStyle(
+              ResponsiveUtils.getResponsiveFontSize(context, 14),
+              Colors.black87,
+              FontWeight.w300,
+            ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: ResponsiveUtils.getResponsiveHeight(context, 4)),
           Text(
             description,
-            style:TextFontStyle.textFontStyle(13,Colors.grey, FontWeight.w500),
+            style: TextFontStyle.textFontStyle(
+              ResponsiveUtils.getResponsiveFontSize(context, 13),
+              Colors.grey,
+              FontWeight.w500,
+            ),
           ),
         ],
       ),
@@ -427,22 +558,35 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
   Widget _buildInputBox(String value) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+      padding: EdgeInsets.symmetric(
+        horizontal: ResponsiveUtils.getResponsiveWidth(context, 12),
+        vertical: ResponsiveUtils.getResponsiveHeight(context, 14),
+      ),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(value,
-        style:TextFontStyle.textFontStyle(14,Color(0xFF575959), FontWeight.w500),
-
+      child: Text(
+        value,
+        style: TextFontStyle.textFontStyle(
+          ResponsiveUtils.getResponsiveFontSize(context, 14),
+          const Color(0xFF575959),
+          FontWeight.w500,
+        ),
       ),
     );
   }
 
-  Widget _buildStatusStep(String title, String date, bool completed,
-      {bool isLast = false}) {
+  Widget _buildStatusStep(
+      String title,
+      String date,
+      bool completed, {
+        bool isLast = false,
+      }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 0),
+      padding: EdgeInsets.symmetric(
+        vertical: ResponsiveUtils.getResponsiveHeight(context, 0),
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -451,13 +595,15 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
             children: [
               // Status circle
               Container(
-                width: 20,
-                height: 20,
+                width: ResponsiveUtils.getResponsiveWidth(context, 20),
+                height: ResponsiveUtils.getResponsiveHeight(context, 20),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: completed ? Color(0xFF1E535B) : Colors.white,
+                  color:
+                  completed ? const Color(0xFF1E535B) : Colors.white,
                   border: Border.all(
-                    color: completed ? Color(0xFF1E535B) : Colors.grey,
+                    color:
+                    completed ? const Color(0xFF1E535B) : Colors.grey,
                     width: 2,
                   ),
                 ),
@@ -467,12 +613,12 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
               if (!isLast)
                 Container(
                   width: 2,
-                  height: 38,
+                  height: ResponsiveUtils.getResponsiveHeight(context, 38),
                   color: Colors.grey.shade400,
                 ),
             ],
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: ResponsiveUtils.getResponsiveWidth(context, 12)),
 
           // Title and date aligned in one row
           Expanded(
@@ -484,13 +630,21 @@ class _DetailedAllBookingScreenState extends State<DetailedAllBookingScreen> {
                 Expanded(
                   child: Text(
                     title,
-                    style:TextFontStyle.textFontStyle(14,Color(0xFF575959), FontWeight.w500),
+                    style: TextFontStyle.textFontStyle(
+                      ResponsiveUtils.getResponsiveFontSize(context, 14),
+                      const Color(0xFF575959),
+                      FontWeight.w500,
+                    ),
                   ),
                 ),
                 // Date aligned right
                 Text(
                   date,
-                  style:TextFontStyle.textFontStyle(12,Color(0xFF757575), FontWeight.w400),
+                  style: TextFontStyle.textFontStyle(
+                    ResponsiveUtils.getResponsiveFontSize(context, 12),
+                    const Color(0xFF757575),
+                    FontWeight.w400,
+                  ),
                   textAlign: TextAlign.right,
                 ),
               ],

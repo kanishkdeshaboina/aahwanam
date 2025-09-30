@@ -1,4 +1,3 @@
-import 'package:aahwanam/widgets/booking_bottom_screen.dart';
 import 'package:aahwanam/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -189,7 +188,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                             imageType: PackageImageType.wishlist,
                             primaryButtonText: "Move to Cart",
                             onPrimaryButtonPressed: () {},
-                            primaryButtonWidth: ResponsiveUtils.getResponsiveWidth(context, 145),
+                            primaryButtonWidth: ResponsiveUtils.getResponsiveWidth(context, 130),
                             primaryButtonHeight: ResponsiveUtils.getResponsiveHeight(context, 29),
                             secondaryButtonText: "Remove",
                             onSecondaryButtonPressed: () {

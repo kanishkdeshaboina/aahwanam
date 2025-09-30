@@ -2,8 +2,6 @@ import 'package:aahwanam/screens/Packages/event_details_screen.dart';
 import 'package:aahwanam/screens/account/detailed_deliversoon_screen.dart';
 import 'package:aahwanam/screens/account/detailed_deliveredmy_packages.dart';
 import 'package:aahwanam/screens/account/detailed_packagecart_screen.dart';
-import 'package:aahwanam/screens/dashboard/dashboard_screen.dart';
-import 'package:aahwanam/widgets/custom_image_card_widget.dart';
 import 'package:aahwanam/widgets/custom_package_card.dart';
 import 'package:aahwanam/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/account/account_bloc.dart';
 import '../../blocs/account/account_state.dart';
 import '../../routes/app_routes.dart';
+import '../../utils/responsive_utils.dart';
 import '../../widgets/custom_cart_card.dart';
 
 class MyPackagesScreen extends StatefulWidget {
@@ -25,16 +24,6 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // ✅ Responsive sizing helpers
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final isTablet = screenWidth > 600;
-
-    double getResponsiveFont(double size) =>
-        isTablet ? size * 1.3 : size; // Scale font on tablets
-    double getResponsivePadding(double size) =>
-        isTablet ? size * 1.5 : size;
-
     return BlocBuilder<AccountBloc, AccountState>(
       builder: (context, state) {
         if (state is AccountLoading) {
@@ -53,7 +42,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
               title: Text(
                 "My Packages",
                 style: TextFontStyle.textFontStyle(
-                  getResponsiveFont(16),
+                  ResponsiveUtils.getResponsiveFontSize(context, 16),
                   const Color(0xFF575959),
                   FontWeight.w500,
                 ),
@@ -63,13 +52,13 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
               elevation: 0,
               leading: IconButton(
                 padding: EdgeInsets.only(
-                  top: getResponsivePadding(2),
-                  left: getResponsivePadding(15),
+                  top: ResponsiveUtils.getResponsiveHeight(context, 2),
+                  left: ResponsiveUtils.getResponsiveWidth(context, 15),
                 ),
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_ios,
-                  size: 18,
-                  color: Color(0xFF575959),
+                  size: ResponsiveUtils.getResponsiveFontSize(context, 18),
+                  color: const Color(0xFF575959),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -78,14 +67,14 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
               actions: [
                 Padding(
                   padding: EdgeInsets.only(
-                    right: screenWidth * 0.04, // Adjust right spacing
-                    left: screenWidth * 0.02, // Adjust left spacing
+                    right: ResponsiveUtils.getResponsiveWidth(context, 16),
+                    left: ResponsiveUtils.getResponsiveWidth(context, 8),
                   ),
                   child: IconButton(
                     icon: Icon(
                       Icons.share_outlined,
-                      size: screenWidth * 0.06,
-                      color: Color(0xFF1E535B), // ✅ Set custom color
+                      size: ResponsiveUtils.getResponsiveFontSize(context, 20),
+                      color: const Color(0xFF1E535B),
                     ),
                     onPressed: () {
                       // Implement share functionality
@@ -99,10 +88,10 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                 // Toggle Buttons
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                    getResponsivePadding(26),
+                    ResponsiveUtils.getResponsiveWidth(context, 26),
                     0,
-                    getResponsivePadding(28),
-                    getResponsivePadding(12),
+                    ResponsiveUtils.getResponsiveWidth(context, 28),
+                    ResponsiveUtils.getResponsiveHeight(context, 12),
                   ),
                   child: Row(
                     children: [
@@ -128,16 +117,18 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                               ),
                             ),
                             padding: EdgeInsets.symmetric(
-                              vertical: getResponsivePadding(12),
+                              vertical: ResponsiveUtils.getResponsiveHeight(context, 12),
                             ),
                           ),
                           child: Text(
                             "Booked Packages",
-                            style: TextStyle(fontSize: getResponsiveFont(12)),
+                            style: TextStyle(
+                                fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12)
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(width: getResponsivePadding(12)),
+                      SizedBox(width: ResponsiveUtils.getResponsiveWidth(context, 12)),
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () {
@@ -160,12 +151,14 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                               ),
                             ),
                             padding: EdgeInsets.symmetric(
-                              vertical: getResponsivePadding(12),
+                              vertical: ResponsiveUtils.getResponsiveHeight(context, 12),
                             ),
                           ),
                           child: Text(
                             "Cart",
-                            style: TextStyle(fontSize: getResponsiveFont(12)),
+                            style: TextStyle(
+                                fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12)
+                            ),
                           ),
                         ),
                       ),
@@ -177,7 +170,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: getResponsivePadding(12),
+                      horizontal: ResponsiveUtils.getResponsiveWidth(context, 12),
                     ),
                     child: isAllSelected
                         ? (packageItems.isEmpty
@@ -185,7 +178,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                       child: Text(
                         "Your wishlist is empty",
                         style: TextStyle(
-                          fontSize: getResponsiveFont(14),
+                          fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
                         ),
                       ),
                     )
@@ -194,12 +187,12 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                       itemBuilder: (context, index) {
                         final package = packageItems[index];
                         return Padding(
-                          padding:
-                          const EdgeInsets.only(bottom: 8.0),
+                          padding: EdgeInsets.only(
+                              bottom: ResponsiveUtils.getResponsiveHeight(context, 8)
+                          ),
                           child: CustomPackageCard(
                             title: package['title'],
-                            servicesIncluded:
-                            package['servicesIncluded'],
+                            servicesIncluded: package['servicesIncluded'],
                             price: package['price'],
                             status: package['status'],
                             onTap: () {
@@ -236,7 +229,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                       child: Text(
                         "Your cart is empty",
                         style: TextStyle(
-                          fontSize: getResponsiveFont(14),
+                          fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
                         ),
                       ),
                     )
@@ -245,8 +238,9 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                       itemBuilder: (context, index) {
                         final cartItem = cartdata[index];
                         return Padding(
-                          padding:
-                          const EdgeInsets.only(bottom: 12),
+                          padding: EdgeInsets.only(
+                              bottom: ResponsiveUtils.getResponsiveHeight(context, 12)
+                          ),
                           child: CustomCartCard(
                             title: cartItem['title'],
                             description: cartItem['description'],
@@ -276,12 +270,12 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                   Container(
                     width: double.infinity,
                     margin: EdgeInsets.symmetric(
-                      horizontal: getResponsivePadding(16),
-                      vertical: getResponsivePadding(12),
+                      horizontal: ResponsiveUtils.getResponsiveWidth(context, 16),
+                      vertical: ResponsiveUtils.getResponsiveHeight(context, 12),
                     ),
                     padding: EdgeInsets.symmetric(
-                      horizontal: getResponsivePadding(16),
-                      vertical: getResponsivePadding(12),
+                      horizontal: ResponsiveUtils.getResponsiveWidth(context, 16),
+                      vertical: ResponsiveUtils.getResponsiveHeight(context, 12),
                     ),
                     child: Row(
                       children: [
@@ -298,7 +292,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                               foregroundColor: Colors.black,
                               side: const BorderSide(color: Colors.black26),
                               padding: EdgeInsets.symmetric(
-                                vertical: getResponsivePadding(14),
+                                vertical: ResponsiveUtils.getResponsiveHeight(context, 14),
                               ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -307,14 +301,14 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                             child: Text(
                               "Add Other Services",
                               style: TextFontStyle.textFontStyle(
-                                getResponsiveFont(14),
+                                ResponsiveUtils.getResponsiveFontSize(context, 14),
                                 const Color(0xFF1E535B),
                                 FontWeight.w500,
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(width: getResponsivePadding(12)),
+                        SizedBox(width: ResponsiveUtils.getResponsiveWidth(context, 12)),
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
@@ -330,7 +324,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                               backgroundColor: const Color(0xFF1E535B),
                               foregroundColor: Colors.white,
                               padding: EdgeInsets.symmetric(
-                                vertical: getResponsivePadding(14),
+                                vertical: ResponsiveUtils.getResponsiveHeight(context, 14),
                               ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -339,7 +333,7 @@ class _MyPackagesScreen extends State<MyPackagesScreen> {
                             child: Text(
                               "Create Package",
                               style: TextFontStyle.textFontStyle(
-                                getResponsiveFont(14),
+                                ResponsiveUtils.getResponsiveFontSize(context, 14),
                                 const Color(0xFFFFFFFF),
                                 FontWeight.w500,
                               ),

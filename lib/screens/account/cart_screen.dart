@@ -27,7 +27,7 @@ class CartScreen extends StatelessWidget {
 
         if (state is AccountLoaded) {
           final scalingFactor = _getScalingFactor(context);
-          final isTablet = ResponsiveUtils.isTablet(context);
+          ResponsiveUtils.isTablet(context);
 
           return Scaffold(
             backgroundColor: Colors.white,

@@ -124,7 +124,7 @@ class _PackageCardState extends State<PackageCard> {
 
   Widget _buildImage() {
     final scaledHeight = _getScaledValue(
-        widget.imageType == PackageImageType.booking ? 110 : 125
+        widget.imageType == PackageImageType.booking ? 108 : 125
     );
     final scaledWidth = _getScaledValue(
         widget.imageType == PackageImageType.wishlist ? 85 : 80
@@ -317,7 +317,7 @@ class _PackageCardState extends State<PackageCard> {
                             SizedBox(width: _getScaledValue(8)),
                           if (widget.primaryButtonText != null)
                             SizedBox(
-                              width: widget.primaryButtonWidth ?? _getScaledValue(90),
+                              width: widget.primaryButtonWidth ?? _getScaledValue(70),
                               height: widget.primaryButtonHeight ?? _getScaledValue(29),
                               child: ElevatedButton(
                                 onPressed: widget.onPrimaryButtonPressed,
